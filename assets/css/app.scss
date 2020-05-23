@@ -1,6 +1,14 @@
 @import "~bootstrap/scss/bootstrap";
 
-body {
-    //background-color: lightgray;
-    background-color: lightblue;
+$primary-color-background: linear-gradient(#8111F0, #F060C2);
+$primary-color-purple: #8111F0;
+$primary-color-pink: #F060C2;
+$primary-color-black: #000000;
+$secondary-color-blue: #80E8FF;
+$secondary-color-grey: #F5EEFE;
+
+body, html {
+    background: $primary-color-background;
+    height: 100%;
+    color: $primary-color-black;
 }
