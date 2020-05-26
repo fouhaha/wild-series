@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ slug }}</title>
+    {{ encore_entry_link_tags('app') }}
+</head>
+<body>
+    <header>
+        {% block navbar %}
+            {% include 'navbar.html.twig' %}
+        {% endblock %}
+    </header>
+    <h1>{% if slug == 'Aucune Sélection' %}
+            Aucune série sélectionnée, veuillez choisir une série
+        {% else  %}
+            {{ slug }}
+        {% endif %}
+    </h1>
+{{ encore_entry_script_tags('app') }}
+</body>
+</html>

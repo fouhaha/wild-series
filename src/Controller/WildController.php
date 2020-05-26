@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\MakerBundle\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,21 +16,20 @@ class WildController extends AbstractController
     public function index(): Response
     {
         return $this->render('wild/index.html.twig', [
-            'website' => 'Bienvenue sur Wild Series',
+            'website' => 'Wild Séries',
         ]);
     }
 
     //@Route("/wild/show/{page}", requirements={"page"="\d+"}, name="wild_show")
-    /**
-     * @Route("/wild/show/{page}",
-     *     requirements={"page"="\d+"},
-     *     defaults={"page"=1},
-     *     name="wild_show"
-     * )
-     */
+    //
+     // @Route("/wild/show/{page}",
+     //     requirements={"page"="\d+"},
+     //     defaults={"page"=1},
+     //     name="wild_show"
+     // )
+
     // Même route avec notation différente :
     // @Route("/wild/show/{page<\d+>?1}", name="wild_show")
-
 
     // Ici, on a 2 fois la même route avec une écriture différente. Mais le résultat est le même !
     // @Route("/wild/new", methods={"POST"}, name="wild_new")
@@ -41,8 +41,18 @@ class WildController extends AbstractController
     // Imposer les méthodes lors de la redirection permet d'éviter la confusion,
     // lors des redirections sur des mêmes pages !
     // NB : Il est possible de cumuler les méthodes (par ex : methods={"GET","POST"})
-    public function show(int $page): Response
+
+    /**
+     * @Route("/wild/show/{slug}",
+     *     requirements={"slug"="[a-z0-9-]+"},
+     *     defaults={"slug"="aucune sélection"},
+     *     name="wild_show"
+     *  )
+     * @param string $slug
+     * @return Response
+     */
+    public function show(string $slug): Response
     {
-        return $this->render('wild/show.html.twig', ['page' => $page]);
+        return $this->render('wild/show.html.twig', ['slug' => ucwords(str_replace("-" , " ", $slug))]);
     }
 }
