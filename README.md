@@ -5,7 +5,7 @@
 # C'est pour cela que dans ces fichiers en question, il peut y avoir certaines fonctionnalités conservées. 
 # Ces fonctionnalités sont passées en commentaire.
 # Il est donc possible d'y accéder en les décommentant.
-# (ATTENTION a commenter les nouvelles versions des fonctionnalités en question, pour les remplacer).
+# (ATTENTION à commenter les nouvelles versions des fonctionnalités en question, pour les remplacer).
 
 # Quête Symfony09 :
 https://www.loom.com/share/da586afaa80748d698bb1bcca097afe4
