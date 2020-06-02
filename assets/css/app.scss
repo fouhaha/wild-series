@@ -1,6 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 
-$primary-color-background: linear-gradient(#8111F0, #F060C2);
+$primary-color-background: -moz-linear-gradient(#8111F0, #F060C2);
 $primary-color-purple: #8111F0;
 $primary-color-pink: #F060C2;
 $primary-color-black: #000000;
@@ -9,6 +9,6 @@ $secondary-color-grey: #F5EEFE;
 
 body, html {
     background: $primary-color-background;
-    height: 100%;
+    background-size: 100%;
     color: $primary-color-black;
 }
