@@ -9,6 +9,7 @@ use App\Entity\ProgramRemarque;
 // ATTENTION : La ligne ci-dessus est demandée dans la quête, mais ça doit être une erreur.
 //             En effet, l'Entity ProgramRemarque n'éxistant pas, ce doit être l'entity Program, simplement.
 //             A ce compte-là, la bonne commande "use" est déjà présente ci-dessus !
+use App\Entity\Season;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\MakerBundle\Str;
@@ -172,6 +173,76 @@ class WildController extends AbstractController
         return $this->render('wild/category.html.twig', [
             'programs' => $programs,
             'categoryName'  => $categoryName,
+        ]);
+    }
+
+    /**
+     * @param string $slug
+     * @Route("/program/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="showProgram")
+     * @return Response
+     */
+    public function showByProgram(?string $slug): Response
+    {
+        if (!$slug) {
+            throw $this
+                ->createNotFoundException('No slug has been sent to find a program in program\'s table.');
+        }
+        $slug = preg_replace(
+            '/-/',
+            ' ', ucwords(trim(strip_tags($slug)), "-")
+        );
+
+        $program = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findOneBy(['title' => mb_strtolower($slug)]);
+        if (!$program) {
+            throw $this->createNotFoundException(
+                'No program with '.$slug.' title, found in program\'s table.'
+            );
+        }
+
+        $seasons = $program->getSeasons();
+        if (!$seasons) {
+            throw $this->createNotFoundException(
+                'No seasons with '.$slug.' program title, found in season\'s table.'
+            );
+        }
+
+        return $this->render('wild/showProgram.html.twig', [
+            'seasons' => $seasons,
+            'slug'  => $slug,
+            'program' => $program
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @Route("/season/{id<^[0-9-]+$>}", defaults={"id" = null}, name="showSeason")
+     * @return Response
+     */
+    public function showBySeason(int $id): Response
+    {
+        if (!$id) {
+            throw $this
+                ->createNotFoundException('No id has been sent to find a season in season\'s table.');
+        }
+
+        $season = $this->getDoctrine()
+            ->getRepository(Season::class)
+            ->findOneBy(['id' => $id]);
+        if (!$season) {
+            throw $this->createNotFoundException(
+                'No season with '.$id.' id, found in season\'s table.'
+            );
+        }
+
+        $program = $season->getProgram();
+        $episodes = $season->getEpisodes();
+
+        return $this->render('wild/showSeason.html.twig', [
+            'season' => $season,
+            'program'  => $program,
+            'episodes' => $episodes
         ]);
     }
 }
