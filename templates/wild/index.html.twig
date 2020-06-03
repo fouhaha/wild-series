@@ -28,6 +28,10 @@ ATTENTION : Fin première version de la vue wild/index.html.twig.
 {% block title %}All programs{% endblock %}
 
 {% block body %}
+    {{ form_start(form) }}
+        {{ form_row(form.searchField) }}
+        <button type="submit" name="btnSearch">Recherche</button>
+    {{ form_end(form) }}
     <h1>Toutes les séries de la table program : </h1>
     {% for program in programs %}
         <div>
