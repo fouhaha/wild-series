@@ -10,9 +10,13 @@ use App\Entity\ProgramRemarque;
 //             En effet, l'Entity ProgramRemarque n'éxistant pas, ce doit être l'entity Program, simplement.
 //             A ce compte-là, la bonne commande "use" est déjà présente ci-dessus !
 use App\Entity\Season;
+use App\Form\ProgramSearchType;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\MakerBundle\Str;
+//  use Symfony\Component\BrowserKit\Request;
+//  Ligne commentée car Request ne peut être utilisé qu'1 fois seulement.
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -41,10 +45,21 @@ class WildController extends AbstractController
      * Show all rows from Program's entity
      *
      * @Route("/", name="index")
+     * @param Request $request
      * @return Response A response instance
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $form = $this->createForm(ProgramSearchType::class);
+        $form->handleRequest($request);
+            /*null,
+            ['method' => Request::METHOD_GET]
+        );*/
+
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+        }
+
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findAll();
@@ -55,10 +70,10 @@ class WildController extends AbstractController
             );
         }
 
-        return $this->render(
-            'wild/index.html.twig',
-            ['programs' => $programs]
-        );
+        return $this->render('wild/index.html.twig', [
+            'programs' => $programs,
+            'form' => $form->createView()
+        ]);
     }
 
     //@Route("/wild/show/{page}", requirements={"page"="\d+"}, name="wild_show")
