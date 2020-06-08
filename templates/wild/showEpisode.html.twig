@@ -1,4 +1,4 @@
-{# templates/wild/program.html.twig #}
+{# templates/wild/showEpisode.html.twig #}
 {% extends 'base.html.twig' %}
 {% block title %}{{ program.title }}-{{ episode.title }}{% endblock %}
 
@@ -9,7 +9,8 @@
         Catégory : {{ category.name }}
     </div>
     <div>
-        Episode : <h1>{{ episode.title }}</h1><br>
+        Episode :
+        <h1>{{ episode.title }}</h1><br>
         {{ episode.synopsis }}
     </div>
     <div>
