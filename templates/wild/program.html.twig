@@ -1,0 +1,20 @@
+{# templates/wild/program.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}{{ program.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ program.title }}</h1><br>
+    <div>
+        Liste des saisons :
+        <ul>
+                <li>
+                    <div class="showSeason">
+                    </div>
+                </li>
+        </ul>
+    </div>
+    <a href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
+
+{% endblock %}

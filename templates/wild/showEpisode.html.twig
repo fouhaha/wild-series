@@ -1,0 +1,25 @@
+{# templates/wild/showEpisode.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}{{ program.title }}-{{ episode.title }}{% endblock %}
+
+{% block body %}
+    <div>
+        <h4>{{ program.title }}</h4>
+        {{ program.summary }}<br>
+        Catégory : {{ category.name }}
+    </div>
+    <div>
+        Episode :
+        <h1>{{ episode.title }}</h1><br>
+        {{ episode.synopsis }}
+    </div>
+    <div>
+        <h6><a href="{{ path('wild_show', {'id': program.id}) }}">{{ program.title }}</a> /
+            <a href="{{ path('wild_showSeason', {'id': season.id}) }}">season</a> /
+        {{ episode.title }}</h6>
+    </div>
+    <a href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
+
+{% endblock %}
