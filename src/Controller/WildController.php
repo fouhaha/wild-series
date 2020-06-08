@@ -3,6 +3,7 @@
 // src/Controller/WildController.php
 namespace App\Controller;
 
+use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\ProgramRemarque;
@@ -118,6 +119,7 @@ class WildController extends AbstractController
 */
 //  ATTENTION : fin des commentaires relatifs à la mise en commentaire de l'ancienne methode show()
 
+/*
     /**
      * Getting a program with a formatted slug for title
      *
@@ -125,6 +127,7 @@ class WildController extends AbstractController
      * @Route("/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="show")
      * @return Response
      */
+/*
     public function show(?string $slug):Response
     {
         if (!$slug) {
@@ -149,6 +152,18 @@ class WildController extends AbstractController
             'slug'  => $slug,
         ]);
     }
+*/
+
+    /**
+     * @Route("/show/{id}", name="show")
+     * @param Program $program
+     * @return Response
+     */
+    public function show(Program $program): Response
+    {
+        return $this->render('wild/show.html.twig',['program' => $program]);
+    }
+
 
     /**
      * Getting the programs with a formatted categoryName for category
@@ -259,5 +274,24 @@ class WildController extends AbstractController
             'program'  => $program,
             'episodes' => $episodes
         ]);
+    }
+
+    /**
+     * @Route("/episode/{id}", name="episode")
+     * @param Episode $episode
+     * @return Response
+     */
+    public function showEpisode(Episode $episode): Response
+    {
+        $season = $episode->getSeason();
+        $program = $season->getProgram();
+        $category = $program->getCategory();
+        return $this->render('wild/showEpisode.html.twig',
+            [
+                'episode' => $episode,
+                'season' => $season,
+                'program' => $program,
+                'category' => $category
+            ]);
     }
 }
