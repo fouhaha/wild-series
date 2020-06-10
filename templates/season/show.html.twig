@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ season.program.title }} - Saison {{ season.number }}{% endblock %}
+
+{% block body %}
+    <h1>Saison {{ season.number }}</h1>
+
+    <table class="table">
+        <tbody>
+            {#
+            <tr>
+                <th>Id</th>
+                <td>{{ season.id }}</td>
+            </tr>
+            #}
+            <tr>
+                <th>Série</th>
+                <td>{{ season.program.title }}<br>
+                    <img src="{{ season.program.poster }}" height="60px" width="40px"
+                         title="{{ season.program.title }}"/></td>
+            </tr>
+            <tr>
+                <th>Saison</th>
+                <td>{{ season.number }}</td>
+            </tr>
+            <tr>
+                <th>Année</th>
+                <td>{{ season.year }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ season.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('season_index') }}">back to list</a>
+
+    <a href="{{ path('season_edit', {'id': season.id}) }}">edit</a>
+
+    {{ include('season/_delete_form.html.twig') }}
+{% endblock %}

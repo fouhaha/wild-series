@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{#
+{% block title %}Season index{% endblock %}
+#}
+{% block title %}Saisons index{% endblock %}
+
+{% block body %}
+    {#
+    <h1>Season index</h1>
+    #}
+    <h1>Toutes les saisons</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {#
+                <th>Programme</th>
+                <th>Year</th>
+                #}
+                <th>Série</th>
+                <th>Saison</th>
+                <th>Année</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for season in seasons %}
+            <tr>
+                <td>{{ season.program.title }}<br>
+                    <img src="{{ season.program.poster }}"
+                         height="60px" width="40px" title="{{ season.program.title }}"/></td>
+                {#
+                <td>{{ season.id }}</td>
+                #}
+                <td>{{ season.number }}</td>
+                <td>{{ season.year }}</td>
+                <td>{{ season.description }}</td>
+                <td>
+                    <a href="{{ path('season_show', {'id': season.id}) }}">show</a>
+                    <a href="{{ path('season_edit', {'id': season.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('season_new') }}">Create new</a>
+{% endblock %}
